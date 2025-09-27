@@ -1,32 +1,47 @@
-import { MenuSection } from "@/components/menu-section"
-import { HeroSection } from "@/components/hero-section"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { createClient } from "@/lib/supabase/client"
+import { MenuSection } from "@/components/menu-section";
+import { HeroSection } from "@/components/hero-section";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
+import { Product } from "@/lib/types";
 
 export default async function HomePage() {
-  const supabase = await createClient()
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const { data: products, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("is_available", true)
-    .order("category", { ascending: true })
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("/api/products", {
+          cache: "no-store", // biar selalu ambil fresh data
+        });
+        if (!res.ok) throw new Error("Gagal fetch produk");
 
-  if (error) {
-    console.error("Error fetching products:", error)
+        const data = await res.json();
+        setProducts(data);
+      } catch (err) {
+        console.error("Error fetching products:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return <p className="text-center text-muted-foreground">Memuat menu...</p>;
   }
-
-  const foodItems = products?.filter((p) => p.category === "food") || []
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main>
         <HeroSection />
-        <MenuSection title="Makanan" items={foodItems} />
+        <MenuSection title="Makanan" items={products} />
       </main>
       <Footer />
     </div>
-  )
+  );
 }
