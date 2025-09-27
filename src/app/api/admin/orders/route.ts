@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createServer()
 
-    const {data: order, error: orderError} = await supabase
+    await supabase
       .from("orders")
       .insert({
         customerEmail,

@@ -21,8 +21,8 @@ export function AdminAuth({ onLogin }: AdminAuthProps) {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [isRegister, setIsRegister] = useState(false);
+  const [, setLoading] = useState(false);
+  const [isRegister, ] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,8 +49,8 @@ export function AdminAuth({ onLogin }: AdminAuthProps) {
       }
 
       onLogin();
-    } catch (err) {
-      setError("Terjadi kesalahan. Coba lagi.");
+    } catch (error) {
+      console.error("Error:", error);
     } finally {
       setLoading(false);
     }

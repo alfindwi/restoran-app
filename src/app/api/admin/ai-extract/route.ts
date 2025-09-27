@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { string, z } from "zod";
+import {z } from "zod";
 import { ChatOpenAI } from "@langchain/openai";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -20,6 +20,13 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+type CloudinaryResult = {
+  secure_url: string;
+  public_id: string;
+  [key: string]: unknown;
+};
+
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
@@ -38,7 +45,7 @@ export async function POST(request: NextRequest) {
         cloudinary.uploader
           .upload_stream({ folder: "menu" }, (error, result) => {
             if (error || !result) reject(error);
-            else resolve(result as any);
+            else resolve(result as CloudinaryResult);
           })
           .end(buffer);
       }
@@ -94,11 +101,8 @@ export async function POST(request: NextRequest) {
     ]);
 
     return NextResponse.json({ ...result, image_url: imageUrl });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error extracting product info:", error);
-    return NextResponse.json(
-      { error: error.message || "Failed to extract product information" },
-      { status: 500 }
-    );
+   
   }
 }

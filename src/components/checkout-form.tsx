@@ -15,7 +15,7 @@ interface CheckoutFormProps {
   onSuccess: () => void
 }
 
-export function CheckoutForm({ onBack, onSuccess }: CheckoutFormProps) {
+export function CheckoutForm({ onBack }: CheckoutFormProps) {
   const { items, getTotalPrice, clearCart } = useCart()
   const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({

@@ -12,7 +12,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import { Plus, Edit, Trash2, Wand2 } from "lucide-react"
 import type { Product } from "@/lib/types"
-import Image from "next/image"
 import { AIProductUpload } from "./ai-product-upload"
 
 export function ProductManagement() {

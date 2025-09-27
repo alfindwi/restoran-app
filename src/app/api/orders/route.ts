@@ -1,10 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { createServer } from "@/lib/supabase/server"
+import { OrderItem } from "@/lib/types"
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { customerName, customerEmail, customerPhone, items, totalAmount, notes } = body
+    const { customerName, customerEmail, customerPhone, items, totalAmount } = body
 
     if (!customerName || !customerEmail || !items || items.length === 0) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
@@ -32,7 +33,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create order items
-    const orderItems = items.map((item: any) => ({
+    const orderItems = items.map((item: OrderItem) => ({
       order_id: order.id,
       product_id: item.product.id,
       quantity: item.quantity,

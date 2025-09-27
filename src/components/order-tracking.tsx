@@ -6,9 +6,10 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Clock, CheckCircle, Package, Utensils, Home, XCircle } from "lucide-react"
+import { Order, OrderItem } from "@/lib/types"
 
 interface OrderTrackingProps {
-  order: any
+  order: Order
 }
 
 export function OrderTracking({ order }: OrderTrackingProps) {
@@ -83,7 +84,7 @@ export function OrderTracking({ order }: OrderTrackingProps) {
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
-                  {statusSteps.map((step, index) => {
+                  {statusSteps.map((step) => {
                     const Icon = step.icon
                     return (
                       <div key={step.key} className="flex items-center space-x-4">
@@ -160,10 +161,10 @@ export function OrderTracking({ order }: OrderTrackingProps) {
                 <div>
                   <h4 className="font-medium mb-2">Item Pesanan</h4>
                   <div className="space-y-2">
-                    {currentOrder.order_items?.map((item: any) => (
+                    {currentOrder.order_items?.map((item: OrderItem) => (
                       <div key={item.id} className="flex justify-between text-sm">
                         <span>
-                          {item.quantity}x {item.products.name}
+                          {item.quantity}x {item.product.name}
                         </span>
                         <span>{formatPrice(item.price * item.quantity)}</span>
                       </div>

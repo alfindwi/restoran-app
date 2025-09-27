@@ -52,9 +52,8 @@ export async function POST(request: NextRequest) {
     if (error) throw error;
 
     return NextResponse.json(data);
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error creating product:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 

@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Plus } from "lucide-react"
 import { useCart } from "@/hooks/use-cart"
-import Image from "next/image"
 
 interface ProductCardProps {
   product: Product

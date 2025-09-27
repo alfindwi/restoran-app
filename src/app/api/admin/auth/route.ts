@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
 
   if (action === "register") {
     // cek email sudah ada?
-    const { data: existing, error: checkErr } = await supabase
+    const { data: existing, } = await supabase
       .from("admin_users")
       .select("id")
       .eq("email", email)
