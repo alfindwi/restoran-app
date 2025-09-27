@@ -1,14 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { MenuSection } from "@/components/menu-section";
 import { HeroSection } from "@/components/hero-section";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
 import { Product } from "@/lib/types";
 
-export default async function HomePage() {
+export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
