@@ -164,7 +164,7 @@ export function OrderTracking({ order }: OrderTrackingProps) {
                     {currentOrder.order_items?.map((item: OrderItem) => (
                       <div key={item.id} className="flex justify-between text-sm">
                         <span>
-                          {item.quantity}x {item.product.name}
+                          {item.quantity}x {item.product?.name}
                         </span>
                         <span>{formatPrice(item.price * item.quantity)}</span>
                       </div>
