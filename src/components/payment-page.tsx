@@ -202,7 +202,7 @@ export function PaymentPage({ order }: PaymentPageProps) {
                   >
                     <div>
                       <p className="font-medium text-sm">
-                        {item.product.name}
+                        {item.product?.name}
                       </p>
                       <p className="text-xs text-muted-foreground">
                         {item.quantity}x {formatPrice(item.price)}
