@@ -76,8 +76,7 @@ export async function POST(request: NextRequest) {
       },
       { text: prompt },
     ]);
-
-    let text = result.response.text();
+    const text = result.response.text();
     console.log("AI Raw Output:", text);
 
     let cleanText = text.trim();
@@ -91,7 +90,11 @@ export async function POST(request: NextRequest) {
 
     if (!parsed.success) {
       return NextResponse.json(
-        { error: "Invalid AI output", issues: parsed.error.format(), raw: cleanText },
+        {
+          error: "Invalid AI output",
+          issues: parsed.error.format(),
+          raw: cleanText,
+        },
         { status: 400 }
       );
     }
@@ -99,6 +102,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ...parsed.data, image_url: imageUrl });
   } catch (error) {
     console.error("Error extracting product info:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
